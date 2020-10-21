@@ -1,5 +1,7 @@
 package xavierdufour.engine;
 
+import java.awt.event.KeyListener;
+
 public abstract class Game {
 
     private RenderingEngine renderingEngine;
@@ -23,6 +25,10 @@ public abstract class Game {
 
     public void stop() {
         playing = false;
+    }
+
+    public void addKeyListener(KeyListener listener) {
+        renderingEngine.addInputListener(listener);
     }
 
     public void run() {
