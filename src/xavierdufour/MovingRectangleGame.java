@@ -12,8 +12,8 @@ public class MovingRectangleGame extends Game {
     private ArrayList<Footprint> footprints;
 
     public MovingRectangleGame() {
-        player = new Player(100, 100);
         inputHandler = new InputHandler();
+        player = new Player(inputHandler);
         footprints = new ArrayList<>();
         super.addKeyListener(inputHandler);
     }
@@ -28,7 +28,7 @@ public class MovingRectangleGame extends Game {
         if (inputHandler.isQuitPressed()) {
             super.stop();
         }
-        player.update(inputHandler);
+        player.update();
         if(inputHandler.isMoving()) {
             footprints.add(player.layFootprint());
         }
