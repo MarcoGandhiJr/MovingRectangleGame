@@ -3,16 +3,18 @@ package xavierdufour;
 import xavierdufour.engine.Buffer;
 import xavierdufour.engine.Game;
 
-import java.awt.*;
+import java.util.ArrayList;
 
 public class MovingRectangleGame extends Game {
 
     private Player player;
     private InputHandler inputHandler;
+    private ArrayList<Footprint> footprints;
 
     public MovingRectangleGame() {
         player = new Player(100, 100);
         inputHandler = new InputHandler();
+        footprints = new ArrayList<>();
         super.addKeyListener(inputHandler);
     }
 
@@ -23,23 +25,21 @@ public class MovingRectangleGame extends Game {
 
     @Override
     public void update() {
-        if (inputHandler.isDownPressed()) {
-            player.setY(player.getY() + 4);
-        } else if (inputHandler.isUpPressed()) {
-            player.setY(player.getY() - 4);
-        } else if (inputHandler.isLeftPressed()) {
-            player.setX(player.getX() - 4);
-        } else if (inputHandler.isRightPressed()) {
-            player.setX(player.getX() + 4);
-        } else if (inputHandler.isQuitPressed()) {
+        if (inputHandler.isQuitPressed()) {
             super.stop();
+        }
+        player.update(inputHandler);
+        if(inputHandler.isMoving()) {
+            footprints.add(player.layFootprint());
         }
     }
 
     @Override
     public void draw(Buffer buffer) {
-        buffer.drawRectangle(player.getX(), player.getY(),
-                player.getWidth(), player.getHeight(), Color.red);
+        for (Footprint footprint : footprints) {
+            footprint.draw(buffer);
+        }
+        player.draw(buffer);
     }
 
     @Override
