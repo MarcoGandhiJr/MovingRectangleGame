@@ -3,21 +3,36 @@ package xavierdufour;
 import xavierdufour.engine.Buffer;
 import xavierdufour.engine.Game;
 import xavierdufour.engine.controls.GameController;
-import xavierdufour.engine.controls.MovementController;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class MovingRectangleGame extends Game {
 
-    private Player player;
-    private GameController controller;
+    private Player playerOne;
+    private Player playerTwo;
+    private GameController controllerOne;
+    private GameController controllerTwo;
     private ArrayList<Footprint> footprints;
 
     public MovingRectangleGame() {
-        controller = new GameController();
-        player = new Player(controller);
+        controllerOne = new GameController();
+        controllerTwo = new GameController();
+        setSecondPlayerKeys();
+
+        playerOne = new Player(controllerOne);
+        playerTwo = new Player(controllerTwo);
+        playerTwo.teleport(200, 200);
         footprints = new ArrayList<>();
-        super.addKeyListener(controller);
+        super.addKeyListener(controllerOne);
+        super.addKeyListener(controllerTwo);
+    }
+
+    private void setSecondPlayerKeys() {
+        controllerTwo.setDownKey(KeyEvent.VK_S);
+        controllerTwo.setUpKey(KeyEvent.VK_W);
+        controllerTwo.setLeftKey(KeyEvent.VK_A);
+        controllerTwo.setRightKey(KeyEvent.VK_D);
     }
 
     @Override
@@ -27,12 +42,16 @@ public class MovingRectangleGame extends Game {
 
     @Override
     public void update() {
-        if (controller.isQuitPressed()) {
+        if (controllerTwo.isQuitPressed()) {
             super.stop();
         }
-        player.update();
-        if(controller.isMoving()) {
-            footprints.add(player.layFootprint());
+        playerOne.update();
+        playerTwo.update();
+        if(controllerOne.isMoving()) {
+            footprints.add(playerOne.layFootprint());
+        }
+        if(controllerTwo.isMoving()) {
+            footprints.add(playerTwo.layFootprint());
         }
     }
 
@@ -41,7 +60,8 @@ public class MovingRectangleGame extends Game {
         for (Footprint footprint : footprints) {
             footprint.draw(buffer);
         }
-        player.draw(buffer);
+        playerOne.draw(buffer);
+        playerTwo.draw(buffer);
     }
 
     @Override

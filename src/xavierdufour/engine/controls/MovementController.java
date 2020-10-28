@@ -36,25 +36,25 @@ public class MovementController extends Controller{
 
     public void setUpKey(int upKey) {
         super.removeKey(this.upKey);
-        this.upKey = upKey;
         super.bindKey(upKey);
+        this.upKey = upKey;
     }
 
     public void setDownKey(int downKey) {
         super.removeKey(this.downKey);
-        this.downKey = downKey;
         super.bindKey(downKey);
+        this.downKey = downKey;
     }
 
     public void setLeftKey(int leftKey) {
         super.removeKey(this.leftKey);
-        this.leftKey = leftKey;
         super.bindKey(leftKey);
+        this.leftKey = leftKey;
     }
 
     public void setRightKey(int rightKey) {
         super.removeKey(this.rightKey);
-        this.rightKey = rightKey;
         super.bindKey(rightKey);
+        this.rightKey = rightKey;
     }
 }
