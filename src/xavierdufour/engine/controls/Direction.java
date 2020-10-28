@@ -1,4 +1,4 @@
-package xavierdufour.engine.entity;
+package xavierdufour.engine.controls;
 
 public enum Direction {
     LEFT(-1, 0),

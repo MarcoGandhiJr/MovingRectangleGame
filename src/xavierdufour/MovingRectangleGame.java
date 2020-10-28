@@ -2,20 +2,22 @@ package xavierdufour;
 
 import xavierdufour.engine.Buffer;
 import xavierdufour.engine.Game;
+import xavierdufour.engine.controls.GameController;
+import xavierdufour.engine.controls.MovementController;
 
 import java.util.ArrayList;
 
 public class MovingRectangleGame extends Game {
 
     private Player player;
-    private InputHandler inputHandler;
+    private GameController controller;
     private ArrayList<Footprint> footprints;
 
     public MovingRectangleGame() {
-        inputHandler = new InputHandler();
-        player = new Player(inputHandler);
+        controller = new GameController();
+        player = new Player(controller);
         footprints = new ArrayList<>();
-        super.addKeyListener(inputHandler);
+        super.addKeyListener(controller);
     }
 
     @Override
@@ -25,11 +27,11 @@ public class MovingRectangleGame extends Game {
 
     @Override
     public void update() {
-        if (inputHandler.isQuitPressed()) {
+        if (controller.isQuitPressed()) {
             super.stop();
         }
         player.update();
-        if(inputHandler.isMoving()) {
+        if(controller.isMoving()) {
             footprints.add(player.layFootprint());
         }
     }
